@@ -4,6 +4,12 @@ Library for handling Crypton addresses and vouchers.
 This solution can be used to shorten the wallet address in order to use it in the URL for web services.
 For example, it will be possible to use a shortened link when creating a donation service in Crypton.
 
+## install
+
+```bash
+composer require jared970/crypton-shortener
+```
+
 ## example
 
 ```php
