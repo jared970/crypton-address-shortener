@@ -36,12 +36,12 @@
 
         function base58Encode($data, $littleEndian = true): string {
             $res = '';
-            $dataIntVal = gmp_init($data, 16);
-            while(gmp_cmp($dataIntVal, gmp_init(0, 10)) > 0)
+            $dataIntVal = \gmp_init($data, 16);
+            while(\gmp_cmp($dataIntVal, gmp_init(0, 10)) > 0)
             {
-                $qr = gmp_div_qr($dataIntVal, gmp_init(58, 10));
+                $qr = \gmp_div_qr($dataIntVal, gmp_init(58, 10));
                 $dataIntVal = $qr[0];
-                $reminder = gmp_strval($qr[1]);
+                $reminder = \gmp_strval($qr[1]);
                 if(! self::base58Permutation($reminder))
                 {
                     throw new \Exception('Something went wrong during base58 encoding');
@@ -68,7 +68,7 @@
         }
 
         function base58Decode($encodedData, $littleEndian = true) {
-            $res = gmp_init(0, 10);
+            $res = \gmp_init(0, 10);
             $length = strlen($encodedData);
             if($littleEndian) {
                 $encodedData = strrev($encodedData);
@@ -76,16 +76,16 @@
     
             for($i = $length - 1; $i >= 0; $i--)
             {
-                $res = gmp_add(
-                               gmp_mul(
+                $res = \gmp_add(
+                               \gmp_mul(
                                        $res,
-                                       gmp_init(58, 10)
+                                       \gmp_init(58, 10)
                                ),
                                self::base58Permutation(substr($encodedData, $i, 1), true)
                        );
             }
     
-            $res = gmp_strval($res, 16);
+            $res = \gmp_strval($res, 16);
             $i = $length - 1;
             while(substr($encodedData, $i, 1) === '1')
             {
